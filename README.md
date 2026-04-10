@@ -49,11 +49,11 @@ puzzlebot_ws/
 
 ---
 
-## Tutorial paso a paso para correr el proyecto
+## Tutorial para correr el proyecto
 
-### Prerequisitos — Instalar dependencias
+### Instalar dependencias
 
-Asegúrate de tener ROS 2 Humble instalado y luego ejecuta:
+ejecutar:
 
 ```bash
 sudo apt install ros-humble-slam-toolbox \
@@ -80,14 +80,14 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
-> **Tip:** Añade `source ~/ros2_ws/install/setup.bash` a tu `~/.bashrc` para no tener que hacerlo en cada terminal nueva:
+> **ProTip:** Añade `source ~/ros2_ws/install/setup.bash` a tu `~/.bashrc` para no tener que hacerlo en cada terminal nueva:
 > ```bash
 > echo "source ~/ros2_ws/install/setup.bash" >> ~/.bashrc
 > ```
 
 ---
 
-### Paso 2 — Verificar el modelo del robot (opcional)
+### Paso 2 — Verificar modelo
 
 Para ver el modelo 3D del Puzzlebot en RViz sin necesidad de simulación:
 
@@ -96,61 +96,12 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch puzzlebot_description puzzlebot_description.launch.py
 ```
 
-Deberías ver el robot con sus ruedas, LiDAR y todos los frames TF correctos en RViz.
+robot con sus ruedas, LiDAR y todos los frames TF correctos en RViz. Cruza los dedos por que si sea asi
 
----
 
-### Opción A — Generar un nuevo mapa con SLAM
 
-Usa esta opción si quieres mapear el entorno desde cero.
 
-**Terminal 1 — Lanzar simulación + SLAM Toolbox + RViz:**
-
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 launch puzzlebot_navigation2 slam.launch.py
-```
-
-Esto abre Gazebo con el laberinto, el Puzzlebot y RViz mostrando el mapa construyéndose en tiempo real.
-
-**Terminal 2 — Teleoperar el robot para explorar el laberinto:**
-
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 run teleop_twist_keyboard teleop_twist_keyboard
-```
-
-Controles del teclado:
-
-| Tecla | Acción |
-|---|---|
-| `i` | Avanzar |
-| `,` | Retroceder |
-| `j` | Girar izquierda |
-| `l` | Girar derecha |
-| `k` | Detener |
-| `q` / `z` | Aumentar / reducir velocidad |
-
-Buenas prácticas durante el mapeo:
-- Muévete **lento y constante** para que el LiDAR registre bien
-- Cubre **todas las zonas** del laberinto sin dejar huecos
-- Evita **giros bruscos** (generan errores de odometría)
-- Vuelve al **punto de inicio** al terminar para activar el loop closure
-
-**Terminal 3 — Guardar el mapa cuando estés satisfecho:**
-
-```bash
-source ~/ros2_ws/install/setup.bash
-ros2 run nav2_map_server map_saver_cli -f ~/ros2_ws/src/puzzlebot_ros2/puzzlebot_navigation2/maps/map_maze
-```
-
-Esto genera dos archivos:
-- `map_maze.pgm` — imagen del mapa (grilla de ocupación)
-- `map_maze.yaml` — metadatos del mapa (resolución, origen, umbrales)
-
----
-
-### Opción B — Navegación autónoma con el mapa ya existente
+### Navegación autónoma con el mapa ya existente
 
 El proyecto ya incluye un mapa generado. Solo necesitas una terminal:
 
