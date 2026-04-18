@@ -49,10 +49,12 @@ class InitialPosePublisher(Node):
 
 
 def main():
+    # Defaults match the spawn position in puzzlebot_gazebo.launch.py
+    # (x=0.0, y=-1.4, yaw=1.5708 — entrada del laberinto apuntando al norte)
     parser = argparse.ArgumentParser(description='Publicar pose inicial de AMCL')
-    parser.add_argument('-x', type=float, default=0.0, help='Posicion x inicial (m)')
-    parser.add_argument('-y', type=float, default=0.0, help='Posicion y inicial (m)')
-    parser.add_argument('-Y', '--yaw', type=float, default=0.0, help='Orientacion yaw (rad)')
+    parser.add_argument('-x', type=float, default=0.0,    help='Posicion x inicial (m)')
+    parser.add_argument('-y', type=float, default=-1.4,   help='Posicion y inicial (m)')
+    parser.add_argument('-Y', '--yaw', type=float, default=1.5708, help='Orientacion yaw (rad)')
     args = parser.parse_args()
 
     rclpy.init()
