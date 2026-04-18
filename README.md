@@ -96,14 +96,36 @@ source ~/ros2_ws/install/setup.bash
 ros2 launch puzzlebot_description puzzlebot_description.launch.py
 ```
 
-robot con sus ruedas, LiDAR y todos los frames TF correctos en RViz. Cruza los dedos por que si sea asi
+Esto debe mostrar el robot con sus ruedas, LiDAR y todos los frames TF correctos en RViz.
 
+---
 
+### Paso 3 — SLAM (mapeo)
 
+Para levantar Gazebo + SLAM Toolbox + RViz en modo mapeo:
 
-### Navegación autónoma con el mapa ya existente
+```bash
+source ~/ros2_ws/install/setup.bash
+ros2 launch puzzlebot_navigation2 slam.launch.py
+```
 
-Ya tiene un mapa cargado pero si hay uno mejor lo reemplazamos. Solo necesitamos una terminal:
+Una vez abierto, controla el robot con teleop en otra terminal:
+
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+Para guardar el mapa generado:
+
+```bash
+ros2 run nav2_map_server map_saver_cli -f ~/ros2_ws/src/puzzlebot_ros2/puzzlebot_navigation2/maps/map_maze
+```
+
+---
+
+### Paso 4 — Navegacion autonoma con el mapa ya existente
+
+El mapa actual ya esta generado. Solo necesitamos una terminal:
 
 ```bash
 source ~/ros2_ws/install/setup.bash
@@ -121,6 +143,30 @@ Situacion de cambio de mapa diferente al original:
 
 ```bash
 ros2 launch puzzlebot_navigation2 nav2.launch.py map:=/ruta/a/tu/mapa.yaml
+```
+
+---
+
+## Scripts auxiliares
+
+El paquete `puzzlebot_navigation2` incluye scripts para automatizar tareas comunes:
+
+| Script | Descripcion |
+|---|---|
+| `send_goal.py` | Envia un goal de navegacion desde la terminal |
+| `set_initial_pose.py` | Publica la pose inicial de AMCL sin usar RViz |
+
+Ejemplos de uso:
+
+```bash
+# Fijar pose inicial en el origen
+ros2 run puzzlebot_navigation2 set_initial_pose.py
+
+# Fijar pose inicial en una posicion especifica
+ros2 run puzzlebot_navigation2 set_initial_pose.py -- -x 0.5 -y 0.3 -Y 1.57
+
+# Enviar un goal de navegacion
+ros2 run puzzlebot_navigation2 send_goal.py -- -x 1.0 -y 2.0 -Y 0.0
 ```
 
 ---

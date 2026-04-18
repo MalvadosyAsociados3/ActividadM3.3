@@ -14,6 +14,7 @@ install(DIRECTORY
 if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/scripts")
   install(PROGRAMS
     scripts/send_goal.py
+    scripts/set_initial_pose.py
     DESTINATION lib/${PROJECT_NAME}
   )
 endif()
