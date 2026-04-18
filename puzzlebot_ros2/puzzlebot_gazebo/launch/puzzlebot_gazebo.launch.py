@@ -29,18 +29,18 @@ def generate_launch_description():
 
     use_sim_time = LaunchConfiguration('use_sim_time', default='true')
     x_pos        = LaunchConfiguration('x_pos',  default='0.0')
-    y_pos        = LaunchConfiguration('y_pos',  default='0.0')
+    y_pos        = LaunchConfiguration('y_pos',  default='-1.4')
     z_pos        = LaunchConfiguration('z_pos',  default='0.05')
-    yaw          = LaunchConfiguration('yaw',    default='0.0')
+    yaw          = LaunchConfiguration('yaw',    default='1.5708')
 
     return LaunchDescription([
 
         DeclareLaunchArgument('use_sim_time', default_value='true',
                               description='Use /clock from Gazebo'),
-        DeclareLaunchArgument('x_pos',  default_value='0.0',  description='Spawn X'),
-        DeclareLaunchArgument('y_pos',  default_value='0.0',  description='Spawn Y'),
+        DeclareLaunchArgument('x_pos',  default_value='0.0',   description='Spawn X'),
+        DeclareLaunchArgument('y_pos',  default_value='-1.4', description='Spawn Y'),
         DeclareLaunchArgument('z_pos',  default_value='0.05', description='Spawn Z'),
-        DeclareLaunchArgument('yaw',    default_value='0.0',  description='Spawn yaw'),
+        DeclareLaunchArgument('yaw',    default_value='1.5708', description='Spawn yaw'),
 
         # ── Gazebo Classic ────────────────────────────────────────────────
         IncludeLaunchDescription(
